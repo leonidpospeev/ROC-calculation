@@ -1,23 +1,21 @@
-#Tere!
-
 import numpy as np
 import matplotlib.pyplot as plt
 
 NUM_POINTS = 500
-MA_WINDOW = 100
+MA_WINDOW = 10
 
-measurement_error = 2
+MEASUREMENT_ERROR = 2
 
 
 # Generating the values and ROCs for the case when the process formula is known
 # and the ROC is known and remains constant
-def generate_temperature_profile1():
+def generate_values1():
     time = np.linspace(0, NUM_POINTS - 1, NUM_POINTS)
 
     k = 0.1
 
     true_value = k * time
-    measured_value = true_value + measurement_error * np.random.randn(NUM_POINTS) / 3
+    measured_value = true_value + MEASUREMENT_ERROR * np.random.randn(NUM_POINTS) / 3
 
     true_value_roc = k * np.ones(NUM_POINTS)
     measured_value_roc1 = np.zeros(NUM_POINTS)
@@ -40,7 +38,7 @@ def generate_temperature_profile1():
 
 # Generating the values and ROCs for the case when the process formula is known
 # and the ROC is known and does not remain constant
-def generate_temperature_profile2():
+def generate_values2():
     time = np.linspace(0, NUM_POINTS - 1, NUM_POINTS)
 
     T0 = 0
@@ -48,7 +46,7 @@ def generate_temperature_profile2():
     k = 0.05
 
     true_value = Ts + (T0 - Ts) * np.exp(-k * time)
-    measured_value = true_value + measurement_error * np.random.randn(NUM_POINTS) / 3
+    measured_value = true_value + MEASUREMENT_ERROR * np.random.randn(NUM_POINTS) / 3
 
     true_value_roc = k * (Ts - T0) * np.exp(-k * time)
     measured_value_roc1 = np.zeros(NUM_POINTS)
@@ -71,7 +69,7 @@ def generate_temperature_profile2():
 
 # Generating the values and ROCs for the case when both the process formula and the ROC
 # are unknown
-def generate_temperature_profile3():
+def generate_values3():
     time = np.linspace(0, NUM_POINTS - 1, NUM_POINTS)
 
     true_value = np.zeros(NUM_POINTS)
@@ -80,7 +78,7 @@ def generate_temperature_profile3():
         true_value[i] = true_value[i - 1] + np.random.randn()
 
     #np.save('rw', true_value)
-    #true_value = np.load('rw.npy')
+    true_value = np.load('rw.npy')
 
     measured_value_roc1 = np.zeros(NUM_POINTS)
     measured_value_roc2 = np.zeros(NUM_POINTS)
@@ -97,4 +95,4 @@ def generate_temperature_profile3():
     plt.show()
 
 
-generate_temperature_profile1()
+generate_values3()
